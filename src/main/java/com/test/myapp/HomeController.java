@@ -3,12 +3,14 @@ package com.test.myapp;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.test.myapp.dto.FileDTO;
 import com.test.myapp.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +60,7 @@ public class HomeController {
 			PrintWriter out = response.getWriter();
 			session.setAttribute("exampleInputEmail", id);
 			out.println("<script>alert('환영합니다.'); </script>");
-			out.println("<script>self.location ='/file/'; </script>");
+			out.println("<script>self.location ='/main'; </script>");
 			out.flush();
 		} else {
 			PrintWriter out = response.getWriter();
@@ -96,9 +98,32 @@ public class HomeController {
 		System.out.println(authority);
 
 		memberService.setUser(id, pw, gender, name, authority);
-
-
  
+	}
+
+	@RequestMapping(value = "/main", method=RequestMethod.GET)
+	public String fileList()throws Exception{
+		return "home/main";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/main", method = RequestMethod.POST)
+	public ModelAndView fileList(HttpSession session) throws Exception{
+
+		ModelAndView mv = null;
+
+			List<FileDTO> fileDto = memberService.getFile();
+
+			mv = new ModelAndView();
+
+			mv.addObject("file",fileDto);
+			System.out.println(memberService.getFile());
+			System.out.println("왜 안돼?");
+
+			mv.setViewName("home/main");
+
+		return mv;
+
 	}
 
 	@RequestMapping(value ="/error", method = RequestMethod.GET)

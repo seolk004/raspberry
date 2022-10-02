@@ -1,10 +1,13 @@
 package com.test.myapp.service;
 
+import com.test.myapp.dto.FileDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.myapp.dao.MemberDAO;
+
+import java.util.List;
 
 @Service
 public class MemberServiceImp implements MemberService {
@@ -40,4 +43,16 @@ public class MemberServiceImp implements MemberService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<FileDTO> getFile(){
+        List<FileDTO> res = null;
+        try {
+            res = memberDao.getFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 }

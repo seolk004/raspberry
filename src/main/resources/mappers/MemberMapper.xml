@@ -13,7 +13,13 @@
     </insert>
 
     <insert id="addFile">
-        insert into file(id,name)
-            values(#{id}, #{name})
+        insert into file(id, name)
+        values(#{id}, #{name})
     </insert>
+
+    <select id ="getFile" resultType ="FileDTO">
+        select id, name
+        from file
+    </select>
+
 </mapper>
