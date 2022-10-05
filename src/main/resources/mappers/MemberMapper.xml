@@ -17,7 +17,7 @@
         values(#{id}, #{name})
     </insert>
 
-    <select id ="getFile" resultType ="FileDTO">
+    <select id ="getFile" resultType ="String">
         select id, name
         from file
     </select>
