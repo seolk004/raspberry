@@ -45,7 +45,7 @@ public class FileController {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("exampleInputEmail");
 			
-		File file = new File("C:/Users/snow/Desktop/테스트/"+name);
+		File file = new File("C:/Users/snow/Desktop/FTP/"+name);
 		
 		if(file.exists()) {
 			response.setStatus(403);

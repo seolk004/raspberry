@@ -126,6 +126,17 @@ public class HomeController {
 
 	}
 
+	@RequestMapping(value = "/file-upload", method = RequestMethod.GET)
+	public String fileupload(HttpServletRequest request) throws Exception{
+
+		return "home/file-upload";
+	}
+	@RequestMapping(value = "/file-view", method = RequestMethod.GET)
+	public String fileview(HttpServletRequest request) throws Exception{
+
+		return "home/file-view";
+	}
+
 	@RequestMapping(value ="/error", method = RequestMethod.GET)
 	public String error(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		response.setStatus(404);
