@@ -3,21 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.test.myapp.dao.MemberDAO">
-    <select id="getName" resultType="String">
+    <select id='getName' resultType='String'>
         select name from member where id = #{id} and pw = #{pw}
     </select>
 
-    <insert id ="setUser">
+    <insert id ='setUser'>
         insert into member (id, pw, gender, name, authority)
             values ( #{id},#{pw},#{gender},#{name},#{authority})
     </insert>
 
-    <insert id="addFile">
+    <insert id='addFile'>
         insert into file(id, name)
         values(#{id}, #{name})
     </insert>
 
-    <select id ="getFile" resultType ="String">
+    <select id ='getFile' resultType ='com.test.myapp.dto.FileDTO'>
         select id, name
         from file
     </select>

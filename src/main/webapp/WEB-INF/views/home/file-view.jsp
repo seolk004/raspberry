@@ -8,7 +8,43 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<c:set var="cpath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function loadJson(){
+      $.ajax({
+        url:"${cpath}/fileList.do",
+        type:"get",
+        dataType:"json",
+        success: ajaxHtml,
+        error:function(){alert("error");}
+      });
+    }
+
+    function ajaxHtml(data){
+      var html="<table class='table'>";
+      html+="<tr>";
+      html+="<td>아이디</td>";
+      html+="<td>파일명</td>";
+      html+="</tr>";
+
+      $.each(data, (index,obj)=>{
+        html+="<tr>";
+        html+="<td>"+obj.id+"</td>";
+        html+="<td>"+obj.name+"</td>";
+        html+="</tr>";
+      })
+      html+="</table>";
+
+      $("#fileList").html(html);
+
+
+    }
+</script>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,8 +124,19 @@
         <td>김설</td>
         <td>2022-9-20</td>
       </tr>
+
       </tbody>
     </table>
+
     <a href="/file/" class="btn btn-dark pull-right">File-UpLoad</a>
+    <button class="btn btn-success btn-sm" onclick="loadJson()">file list</button>
+    <br/><br/>   <!--버튼 클릭시 ajax로 넘어가서 출력되어야하는데 실패함 error출력됨-->
+    <div id="fileList">
+      list here
+    </div>
+    <c:forEach var="dto" items="${list}"> <!-- jstl로 출력하는 방식인데 실패함 -->
+        ${dto.id}
+        ${dto.name}<br/>
+    </c:forEach>
   </div>
 </div>

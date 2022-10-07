@@ -15,8 +15,10 @@ import com.test.myapp.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,7 +62,7 @@ public class HomeController {
 			PrintWriter out = response.getWriter();
 			session.setAttribute("exampleInputEmail", id);
 			out.println("<script>alert('환영합니다.'); </script>");
-			out.println("<script>self.location ='/main'; </script>");
+			out.println("<script>self.location ='/fileList.do'; </script>");
 			out.flush();
 		} else {
 			PrintWriter out = response.getWriter();
@@ -101,29 +103,15 @@ public class HomeController {
  
 	}
 
-	@RequestMapping(value = "/main", method=RequestMethod.GET)
-	public String fileList()throws Exception{
-		return "home/main";
-	}
 
-	@ResponseBody
-	@RequestMapping(value = "/main", method = RequestMethod.POST)
-	public ModelAndView fileList(HttpSession session) throws Exception{
+	//데이터베이스 파일테이블에서 아이디랑 파일이름을 가져오는 메서드
+	// file-view jsp를 찾아감
+	@RequestMapping(value ="/fileList.do")
+	public String fileList(Model model){
+		List<FileDTO> fileList = memberService.getFile();
+		model.addAttribute("fileList", fileList);
 
-		ModelAndView mv = null;
-
-			List<FileDTO> fileDto = memberService.getFile();
-
-			mv = new ModelAndView();
-
-			mv.addObject("file",fileDto);
-			System.out.println(memberService.getFile());
-			System.out.println("왜 안돼?");
-
-			mv.setViewName("home/main");
-
-		return mv;
-
+		return "home/file-view";
 	}
 
 	@RequestMapping(value = "/file-upload", method = RequestMethod.GET)
